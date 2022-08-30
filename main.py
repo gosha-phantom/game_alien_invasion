@@ -4,6 +4,7 @@ from classes.ship import Ship
 import game_functions as gf
 from pygame.sprite import Group
 
+
 def run_game():
     # инициализируем игру
     pygame.init()
@@ -20,6 +21,10 @@ def run_game():
     # создаем группы для хранения пуль
     bullets = Group()
 
+    # создание флота пришельцев
+    aliens = Group()
+    gf.create_fleet(ai_settings, screen, aliens)
+
     # запуск основного цикла игры
     while True:
         # отслеживаем события нажатия кнопок клавы и мыши
@@ -29,18 +34,11 @@ def run_game():
         # обновляем местоположение основного корабля
         ship.update()
 
-        # обновляем расположение группы пуль
-        bullets.update()
-
-        # удаляем из памяти улетевшие за пределы окна пули
-        for bullet in bullets.copy():
-            if bullet.rect.bottom <= 0:
-                bullets.remove(bullet)
-            # проверка на удаление вылетевших пуль из памяти
-            # print(len(bullets))
+        # обновляем местоположение пуль
+        gf.update_bullets(bullets)
             
         # обновляем экран
-        gf.update_screen(ai_settings, screen, ship, bullets)
+        gf.update_screen(ai_settings, screen, ship, bullets, aliens)
 
 # запускаем игру
 run_game()

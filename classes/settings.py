@@ -14,3 +14,5 @@ class Settings():
         self.bullet_width = 3
         self.bullet_height = 10
         self.bullet_color = (60, 60, 60) 
+        # ограничение количества пуль на экране
+        self.bullets_allowed = 5
