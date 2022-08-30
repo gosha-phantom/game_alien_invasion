@@ -14,29 +14,42 @@ def get_number_aliens_x(ai_settings, alien_width):
     # возвращаем результат
     return number_aliens_x
 
+# получаем количество пришельцев в вертикальном ряду
+def get_number_rows(ai_settings, alien_height, ship_height):
+    # определяем доступное пространство для прорисовки флота пришельцев по вертикали
+    available_space_y = ai_settings.screen_height - (3 * alien_height) - ship_height
+    # определяем количество пришельцев в одном столбце
+    number_rows = int(available_space_y / (2 * alien_height))
+    # возвращаем результат
+    return number_rows
+
 # прорисовываем одного пришельца
-def create_alien(ai_settings, screen, aliens, alien_number):
+def create_alien(ai_settings, screen, aliens, alien_number, row_number):
     # Создание пришельца и размещение его в ряду
     alien = Alien(ai_settings, screen)
     alien_width = alien.rect.width
     alien.x = alien_width + (2 * alien_width * alien_number)
     alien.rect.x = alien.x
+    alien.rect.y = alien.rect.height + (2 * alien.rect.height * row_number)
     aliens.add(alien)
 
 # Создает флот пришельцев
-def create_fleet(ai_settings, screen, aliens):
+def create_fleet(ai_settings, screen, aliens, ship):
     """Создает флот пришельцев"""
     # создание пришельца
     alien = Alien(ai_settings, screen)
     # определяем в переменную значение ширины одного пришельца
-    alien_width = alien.rect.width
+    # alien_width = alien.rect.width
     # получаем количество пришельцев в горизонтальном ряду
-    number_aliens_x = get_number_aliens_x(ai_settings, alien_width)
+    number_aliens_x = get_number_aliens_x(ai_settings, alien.rect.width)
+    # получаем количество пришельцев в вертикальном ряду
+    number_rows = get_number_rows(ai_settings, alien.rect.height, ship.rect.height)
 
-    # Создание первого ряда пришельцев
-    for alien_number in range(number_aliens_x):
-        # Создание пришельца и размещение его в ряду
-        create_alien(ai_settings, screen, aliens, alien_number)
+    # Создание флота пришельцев
+    for row_number in range(number_rows):
+        for alien_number in range(number_aliens_x):
+            # Создание пришельца и размещение его в ряду
+            create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
 
 # функция стрельбы
