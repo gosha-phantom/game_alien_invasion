@@ -19,3 +19,10 @@ class Settings():
 
         # параметры звезды
         self.star_quantity = 15
+
+        # параметры пришельцев
+        self.alien_speed_factor = 1
+        # скорость снижения флота вниз
+        self.fleet_drop_speed = 10
+        # fleet_direction = 1 движение вправо; -1 движение влево
+        self.fleet_direction = 1 

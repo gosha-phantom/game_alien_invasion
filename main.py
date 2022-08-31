@@ -42,6 +42,9 @@ def run_game():
         # обновляем местоположение основного корабля
         ship.update()
 
+        # обновляет местоположение пришельцев
+        gf.update_aliens(ai_settings, aliens)
+
         # обновляем экран и прорисовываем объекты
         gf.update_screen(ai_settings, screen, ship, bullets, aliens, stars)
 

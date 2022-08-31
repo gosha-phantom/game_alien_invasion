@@ -145,9 +145,9 @@ def update_screen(ai_settings, screen, ship, bullets, aliens, stars):
     pygame.display.flip()
 
 
-#
+# Обновляет позиции пуль и уничтожает старые пули
 def update_bullets(bullets):
-    """обновляет позиции пуль и уничтожает старые пули"""
+    """Обновляет позиции пуль и уничтожает старые пули."""
     # обновляем расположение группы пуль
     bullets.update()
 
@@ -157,3 +157,27 @@ def update_bullets(bullets):
             bullets.remove(bullet)
         # проверка на удаление вылетевших пуль из памяти
         # print(len(bullets))
+
+
+def check_fleet_edges(ai_settings, aliens):
+    """Реагирует на достижение пришельцем края платформы."""
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(ai_settings, aliens)
+            break
+
+
+def change_fleet_direction(ai_settings, aliens):
+    """Опускает весь флот и меняет его направление."""
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed
+    ai_settings.fleet_direction *= -1
+
+
+def update_aliens(ai_settings, aliens):
+    """
+        Проверяет, достиг ли флот края экрана,
+            после чего обновляет позиции всех пришельцев во флоте.
+    """
+    check_fleet_edges(ai_settings, aliens)
+    aliens.update()
