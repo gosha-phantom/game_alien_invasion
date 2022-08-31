@@ -3,6 +3,27 @@ from turtle import width
 import pygame
 from classes.bullet import Bullet
 from classes.alien import Alien
+from classes.star import Star
+from random import randint
+
+
+# создаем одну звезду
+def create_one_star(ai_settings, screen, stars):
+    star = Star(ai_settings, screen)
+    star.x = randint(0, ai_settings.screen_width)
+    star.rect.x = star.x
+    star.y = randint(0, ai_settings.screen_height)
+    star.rect.y = star.y
+
+    stars.add(star)
+
+# создаем звездное небо
+def create_star_sky(ai_settings, screen, stars):
+    # создание объекта звезды
+    # star = Star(ai_settings, screen)
+    # рисуем в цикле звезды
+    for i in range(ai_settings.star_quantity):
+        create_one_star(ai_settings, screen, stars)
 
 
 # получаем количество пришельцев в горизонтальном ряду
@@ -36,20 +57,22 @@ def create_alien(ai_settings, screen, aliens, alien_number, row_number):
 # Создает флот пришельцев
 def create_fleet(ai_settings, screen, aliens, ship):
     """Создает флот пришельцев"""
-    # создание пришельца
+    # создание первого пришельца
     alien = Alien(ai_settings, screen)
     # определяем в переменную значение ширины одного пришельца
     # alien_width = alien.rect.width
     # получаем количество пришельцев в горизонтальном ряду
     number_aliens_x = get_number_aliens_x(ai_settings, alien.rect.width)
     # получаем количество пришельцев в вертикальном ряду
-    number_rows = get_number_rows(ai_settings, alien.rect.height, ship.rect.height)
+    number_rows = get_number_rows(ai_settings, alien.rect.height, 
+                                ship.rect.height)
 
     # Создание флота пришельцев
     for row_number in range(number_rows):
         for alien_number in range(number_aliens_x):
             # Создание пришельца и размещение его в ряду
-            create_alien(ai_settings, screen, aliens, alien_number, row_number)
+            create_alien(ai_settings, screen, aliens, alien_number, 
+                        row_number)
 
 
 # функция стрельбы
@@ -94,18 +117,24 @@ def check_events(ai_settings, screen, ship, bullets):
 
 
 # функция обновления экрана
-def update_screen(ai_settings, screen, ship, bullets, aliens):
+def update_screen(ai_settings, screen, ship, bullets, aliens, stars):
     """Обновление изображения на экране и отображение нового экрана"""
     # присваиваем цвет фона экрану
     screen.fill(ai_settings.bg_color)
 
+    # прорисовываем звездное небо
+    stars.draw(screen)
+    
     # все пули выводятся позади изображений корабля и пришельцев
     for bullet in bullets.sprites():
         bullet.draw_bullet()
 
     # прорисовываем основной корабль
     ship.blitme()
-        
+
+    # прорисовываем одну звезду
+    # star.blitme()
+
     # прорисовываем пришельца
     # alien.blitme()
 

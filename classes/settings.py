@@ -15,4 +15,7 @@ class Settings():
         self.bullet_height = 10
         self.bullet_color = (60, 60, 60) 
         # ограничение количества пуль на экране
-        self.bullets_allowed = 5
+        self.bullets_allowed = 10
+
+        # параметры звезды
+        self.star_quantity = 15

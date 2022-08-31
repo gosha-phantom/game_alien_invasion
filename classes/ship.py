@@ -1,4 +1,3 @@
-from turtle import Screen, screensize
 import pygame
 
 class Ship():

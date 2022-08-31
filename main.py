@@ -1,6 +1,7 @@
 import pygame
 from classes.settings import Settings
 from classes.ship import Ship
+from classes.star import Star
 import game_functions as gf
 from pygame.sprite import Group
 
@@ -15,6 +16,13 @@ def run_game():
     # название основного окна приложения
     pygame.display.set_caption('Нашествие пришельцев')
 
+    # создаем одну звезду
+    # star = Star(ai_settings, screen)
+
+    # создаем звездное небо
+    stars = Group()
+    gf.create_star_sky(ai_settings, screen, stars)
+    
     # создаем основной корабль
     ship = Ship(ai_settings, screen)
 
@@ -34,11 +42,11 @@ def run_game():
         # обновляем местоположение основного корабля
         ship.update()
 
+        # обновляем экран и прорисовываем объекты
+        gf.update_screen(ai_settings, screen, ship, bullets, aliens, stars)
+
         # обновляем местоположение пуль
         gf.update_bullets(bullets)
-            
-        # обновляем экран
-        gf.update_screen(ai_settings, screen, ship, bullets, aliens)
 
 # запускаем игру
 run_game()
