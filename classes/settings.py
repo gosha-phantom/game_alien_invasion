@@ -15,7 +15,7 @@ class Settings():
         self.bullet_height = 10
         self.bullet_color = (60, 60, 60) 
         # ограничение количества пуль на экране
-        self.bullets_allowed = 10
+        self.bullets_allowed = 5
 
         # параметры звезды
         self.star_quantity = 15
@@ -26,3 +26,6 @@ class Settings():
         self.fleet_drop_speed = 10
         # fleet_direction = 1 движение вправо; -1 движение влево
         self.fleet_direction = 1 
+
+        # настройки игры и статистика
+        self.ship_limit = 3
