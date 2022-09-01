@@ -3,6 +3,7 @@ from classes.settings import Settings
 from classes.ship import Ship
 from classes.star import Star
 from classes.game_stats import GameStats
+from classes.button import Button
 import game_functions as gf
 from pygame.sprite import Group
 
@@ -17,6 +18,9 @@ def run_game():
                                     ai_settings.screen_height))
     # название основного окна приложения
     pygame.display.set_caption('Нашествие пришельцев')
+
+    # создание кнопки Play
+    play_button = Button(ai_settings, screen, 'Play')
 
     # создаем одну звезду
     # star = Star(ai_settings, screen)
@@ -41,8 +45,8 @@ def run_game():
     # запуск основного цикла игры
     while True:
         # отслеживаем события нажатия кнопок клавы и мыши
-        # gf.check_events(ship)
-        gf.check_events(ai_settings, screen, ship, bullets)
+        gf.check_events(ai_settings, screen, stats, ship, bullets, 
+                            aliens, play_button)
 
         if stats.game_active:
             # обновляем местоположение основного корабля
@@ -51,12 +55,12 @@ def run_game():
             # обновляет местоположение пришельцев
             gf.update_aliens(ai_settings, screen, stats, ship, bullets, aliens)
 
-            # обновляем экран и прорисовываем объекты
-            gf.update_screen(ai_settings, screen, ship, bullets, aliens, stars)
-
             # обновляем местоположение пуль
             gf.update_bullets(bullets, aliens, ai_settings, screen, ship)
 
+        # обновляем экран и прорисовываем объекты
+        gf.update_screen(ai_settings, screen, stats, ship, bullets, aliens, 
+                                stars, play_button)
 
 
 # запускаем игру
