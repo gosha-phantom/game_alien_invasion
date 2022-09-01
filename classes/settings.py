@@ -6,8 +6,6 @@ class Settings():
         self.screen_height = 800
         self.bg_color = (230, 230, 230)
         
-        
-
         # параметры пули
         self.bullet_width = 3
         self.bullet_height = 10
@@ -25,10 +23,13 @@ class Settings():
         
 
         # настройки игры и статистика
-        self.ship_limit = 0
+        self.ship_limit = 3
 
         # темп ускорения игры
         self.speedup_scale = 1.1
+        # темп роста очков за сбитых пришельцев
+        self.score_scale = 1.5
+        # инициализация изменяющихся настроек
         self.initialize_dynamyc_settings()
 
     def initialize_dynamyc_settings(self):
@@ -41,10 +42,14 @@ class Settings():
         self.alien_speed_factor = 1
         # fleet_direction = 1 движение вправо; -1 движение влево
         self.fleet_direction = 1
+        # подсчет сбитых пришельцев
+        self.alien_points = 10
     
     def increase_speed(self):
         """Увеличивает настройки скорости"""
         self.ship_speed_factor *=self.speedup_scale
         self.bullet_speed_factor *=self.speedup_scale
         self.alien_speed_factor *=self.speedup_scale
+        # увеличиваем очки за сбитых пришельцев
+        self.alien_points = int(self.alien_points * self.score_scale)
 
